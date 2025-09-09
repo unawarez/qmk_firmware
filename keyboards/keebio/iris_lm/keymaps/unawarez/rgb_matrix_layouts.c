@@ -8,12 +8,8 @@ extern const rgb_matrix_layouts_palette_t rgblayouts_palette;
 static bool LAYOUTS(effect_params_t *params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
-    uint8_t layer = 0;
-    for (uint8_t checklayer = 1; checklayer < n_rgblayouts; checklayer++) {
-        if (layer_state_is(checklayer)) {
-            layer = checklayer;
-        }
-    }
+    uint8_t layer = get_highest_layer(layer_state);
+
     const uint8_t *layout = rgblayouts[layer];
     for (uint8_t i = led_min; i < led_max; i++) {
         const rgb_t *color = rgblayouts_palette + layout[i];
